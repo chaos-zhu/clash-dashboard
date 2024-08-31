@@ -48,7 +48,7 @@ function getControllerFromLocation (): string | null {
 // jotai v2 use initialValue first avoid hydration warning, but we don't want that
 const hostsStorageOrigin = localStorage.getItem('externalControllers') ??
     getControllerFromLocation() ??
-    '[{ "hostname": "127.0.0.1", "port": 7890, "secret": "" }]'
+    `[{ "hostname": "${location.hostname}", "port": 60999, "secret": "" }]`
 const hostSelectIdxStorageOrigin = localStorage.getItem('externalControllerIndex') ?? '0'
 
 export const hostsStorageAtom = atomWithStorage<Array<{
@@ -80,7 +80,7 @@ export function useAPIInfo () {
     const qs = new URLSearchParams(location.search)
 
     const hostname = qs.get('host') ?? hostsStorage?.[hostSelectIdxStorage]?.hostname ?? url?.hostname ?? '127.0.0.1'
-    const port = qs.get('port') ?? hostsStorage?.[hostSelectIdxStorage]?.port ?? url?.port ?? '9090'
+    const port = qs.get('port') ?? hostsStorage?.[hostSelectIdxStorage]?.port ?? url?.port ?? '60999'
     const secret = qs.get('secret') ?? hostsStorage?.[hostSelectIdxStorage]?.secret ?? url?.username ?? ''
     const protocol = qs.get('protocol') ?? hostname === '127.0.0.1' ? 'http:' : (url?.protocol ?? window.location.protocol)
 
